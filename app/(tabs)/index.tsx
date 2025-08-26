@@ -1,75 +1,137 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import React from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 
 export default function HomeScreen() {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View style={styles.profileContainer}>
+            <Image 
+              source={{ 
+                uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuA8_iomKTN2Ginqu1XE8pmZtfmXgRPiU2dTHVLD8VtIDWBiQMpAHDwDfuEkJy-mON5Ci2KllSJrrsrN6Oib_6V29nRiZrIC3cWpwTu7mXuNucBeLaxorLfW6tZW8wEebLql2mkkmoal6dpGThnIIaO2JQFumBz-AUNEBH_-ZuaXL8-41bSarJCDS0dwehoR335NIYIAT88UfTshiuDhqX33TTSsvzOWpRQmMa1CBGcr1kZWgcdnFKAXbZdKCFnZp_FzDaDo4nGUyY1_' 
+              }}
+              style={styles.profileImage}
+            />
+          </View>
+          <TouchableOpacity style={styles.settingsButton}>
+            <IconSymbol size={24} name="gear" color="#ffffff" />
+          </TouchableOpacity>
+        </View>
+
+        {/* Today Section */}
+        <Text style={styles.todayTitle}>Today</Text>
+
+        {/* Workout Card */}
+        <View style={styles.cardContainer}>
+          <View style={styles.workoutCard}>
+            <Image 
+              source={{ 
+                uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCpwdClUHJvo31YJjK7aQFb_yLxmFK_sy7tIO2B1xdvE2-gXK_WI_GrC-Frd3lTIRNCLERZ_deh4G_Bumhw1Ns_fNk4Xox-INouUmLn5SD0r7S66ZuQdPstp1zeJE97WcfXWs32NEGUiTGcV064cjsVwK3niif9MmIBZry-s3FuxXrQ7Vq6rMbOt_aQbsxpSZSEBVajs1jTpvypnCOpxwPW62YAZB2KAL128sG2ivjAe14PuUxHjaWC-fO2UJg1LyhyKLBQnL2uVIcm' 
+              }}
+              style={styles.workoutImage}
+            />
+            <View style={styles.workoutInfo}>
+              <Text style={styles.workoutTitle}>Full Body Strength</Text>
+              <View style={styles.workoutDetails}>
+                <View style={styles.detailsColumn}>
+                  <Text style={styles.workoutLocation}>Gym</Text>
+                  <Text style={styles.workoutTime}>10:00 AM - 11:00 AM</Text>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: '#111816',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  header: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    justifyContent: 'space-between',
+    backgroundColor: '#111816',
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 8,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  profileContainer: {
+    width: 48,
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  profileImage: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+  },
+  settingsButton: {
+    width: 48,
+    height: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  todayTitle: {
+    color: '#ffffff',
+    fontSize: 22,
+    fontWeight: 'bold',
+    letterSpacing: -0.015,
+    paddingHorizontal: 16,
+    paddingBottom: 12,
+    paddingTop: 20,
+  },
+  cardContainer: {
+    paddingHorizontal: 16,
+  },
+  workoutCard: {
+    backgroundColor: 'transparent',
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  workoutImage: {
+    width: '100%',
+    aspectRatio: 16 / 10,
+    borderRadius: 12,
+  },
+  workoutInfo: {
+    paddingVertical: 16,
+    gap: 4,
+  },
+  workoutTitle: {
+    color: '#ffffff',
+    fontSize: 18,
+    fontWeight: 'bold',
+    letterSpacing: -0.015,
+  },
+  workoutDetails: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    justifyContent: 'space-between',
+    marginTop: 4,
+  },
+  detailsColumn: {
+    gap: 4,
+  },
+  workoutLocation: {
+    color: '#9cbab3',
+    fontSize: 16,
+    fontWeight: 'normal',
+  },
+  workoutTime: {
+    color: '#9cbab3',
+    fontSize: 16,
+    fontWeight: 'normal',
   },
 });

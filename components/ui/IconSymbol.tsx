@@ -1,24 +1,49 @@
 // Fallback for using MaterialIcons on Android and web.
 
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Entypo from '@expo/vector-icons/Entypo';
 import { SymbolWeight, SymbolViewProps } from 'expo-symbols';
 import { ComponentProps } from 'react';
 import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
 
-type IconMapping = Record<SymbolViewProps['name'], ComponentProps<typeof MaterialIcons>['name']>;
-type IconSymbolName = keyof typeof MAPPING;
+type IconConfig = { 
+  library: 'MaterialIcons' | 'FontAwesome5' | 'FontAwesome' | 'FontAwesome6' | 'Entypo';
+  name: ComponentProps<typeof MaterialIcons>['name'] | ComponentProps<typeof FontAwesome5>['name'] | ComponentProps<typeof FontAwesome>['name'] | ComponentProps<typeof FontAwesome6>['name'] | ComponentProps<typeof Entypo>['name'];
+};
+
+type IconMapping = {
+  'house.fill': IconConfig;
+  'paperplane.fill': IconConfig;
+  'chevron.left.forwardslash.chevron.right': IconConfig;
+  'chevron.right': IconConfig;
+  'dumbbell.fill': IconConfig;
+  'calendar': IconConfig;
+  'meals': IconConfig;
+  'sleep': IconConfig;
+  'gear': IconConfig;
+};
+
+type IconSymbolName = keyof IconMapping;
 
 /**
  * Add your SF Symbols to Material Icons mappings here.
  * - see Material Icons in the [Icons Directory](https://icons.expo.fyi).
  * - see SF Symbols in the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
  */
-const MAPPING = {
-  'house.fill': 'home',
-  'paperplane.fill': 'send',
-  'chevron.left.forwardslash.chevron.right': 'code',
-  'chevron.right': 'chevron-right',
-} as IconMapping;
+const MAPPING: IconMapping = {
+  'house.fill': { library: 'Entypo', name: 'home' },
+  'paperplane.fill': { library: 'MaterialIcons', name: 'send' },
+  'chevron.left.forwardslash.chevron.right': { library: 'MaterialIcons', name: 'code' },
+  'chevron.right': { library: 'MaterialIcons', name: 'chevron-right' },
+  'dumbbell.fill': { library: 'FontAwesome5', name: 'dumbbell' },
+  'calendar': { library: 'FontAwesome', name: 'calendar' },
+  'meals': { library: 'FontAwesome6', name: 'bowl-food' },
+  'sleep': { library: 'MaterialIcons', name: 'nightlight' },
+  'gear': { library: 'MaterialIcons', name: 'settings' },
+};
 
 /**
  * An icon component that uses native SF Symbols on iOS, and Material Icons on Android and web.
@@ -37,5 +62,28 @@ export function IconSymbol({
   style?: StyleProp<TextStyle>;
   weight?: SymbolWeight;
 }) {
-  return <MaterialIcons color={color} size={size} name={MAPPING[name]} style={style} />;
+  const iconConfig = MAPPING[name];
+  
+  if (!iconConfig) {
+    console.warn(`Icon "${name}" not found in MAPPING. Using fallback icon.`);
+    return <MaterialIcons color={color} size={size} name="home" style={style} />;
+  }
+
+  if (iconConfig.library === 'Entypo') {
+    return <Entypo color={color} size={size} name={iconConfig.name as ComponentProps<typeof Entypo>['name']} style={style} />;
+  }
+  
+  if (iconConfig.library === 'FontAwesome5') {
+    return <FontAwesome5 color={color} size={size} name={iconConfig.name as ComponentProps<typeof FontAwesome5>['name']} style={style} />;
+  }
+
+  if (iconConfig.library === 'FontAwesome6') {
+    return <FontAwesome6 color={color} size={size} name={iconConfig.name as ComponentProps<typeof FontAwesome5>['name']} style={style} />;
+  }
+
+  if (iconConfig.library === 'FontAwesome') {
+    return <FontAwesome color={color} size={size} name={iconConfig.name as ComponentProps<typeof FontAwesome>['name']} style={style} />;
+  }
+
+  return <MaterialIcons color={color} size={size} name={iconConfig.name as ComponentProps<typeof MaterialIcons>['name']} style={style} />;
 }
