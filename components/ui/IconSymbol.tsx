@@ -1,13 +1,14 @@
 // Fallback for using MaterialIcons on Android and web.
 
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Entypo from '@expo/vector-icons/Entypo';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import Entypo from '@expo/vector-icons/Entypo';
-import { SymbolWeight, SymbolViewProps } from 'expo-symbols';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { SymbolWeight } from 'expo-symbols';
 import { ComponentProps } from 'react';
 import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
+
 
 type IconConfig = { 
   library: 'MaterialIcons' | 'FontAwesome5' | 'FontAwesome' | 'FontAwesome6' | 'Entypo';
