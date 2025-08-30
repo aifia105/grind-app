@@ -25,6 +25,12 @@ type IconMapping = {
   'meals': IconConfig;
   'sleep': IconConfig;
   'gear': IconConfig;
+  'menu': IconConfig;
+  'plus': IconConfig;
+  'book.fill': IconConfig;
+  'sparkles': IconConfig;
+  'magnifyingglass': IconConfig;
+  'line.3.horizontal.decrease': IconConfig;
 };
 
 type IconSymbolName = keyof IconMapping;
@@ -44,6 +50,12 @@ const MAPPING: IconMapping = {
   'meals': { library: 'FontAwesome6', name: 'bowl-food' },
   'sleep': { library: 'MaterialIcons', name: 'nightlight' },
   'gear': { library: 'MaterialIcons', name: 'settings' },
+  'menu': { library: 'Entypo', name: 'menu' },
+  'plus': { library: 'Entypo', name: 'plus' },
+  'book.fill': { library: 'FontAwesome', name: 'book' },
+  'sparkles': { library: 'FontAwesome5', name: 'magic' },
+  'magnifyingglass': { library: 'FontAwesome', name: 'search' },
+  'line.3.horizontal.decrease': { library: 'MaterialIcons', name: 'tune' },
 };
 
 /**

@@ -6,6 +6,7 @@ import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
+import { getFontFamily } from '@/constants/Fonts';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
@@ -14,8 +15,8 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#ffffff', 
-        tabBarInactiveTintColor: '#9cbab3', 
+        tabBarActiveTintColor: Colors.accent.primary, 
+        tabBarInactiveTintColor: Colors.text.tertiary, 
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarHideOnKeyboard: true,
@@ -24,18 +25,18 @@ export default function TabLayout() {
         tabBarStyle: Platform.select({
           ios: {
             position: 'absolute',
-            backgroundColor: '#1b2724', 
+            backgroundColor: Colors.surface.primary, 
             borderTopWidth: 1,
-            borderTopColor: '#283935', 
+            borderTopColor: Colors.border.primary, 
             height: 88,
             paddingBottom: 34,
             paddingTop: 8,
             paddingHorizontal: 16,
           },
           default: {
-            backgroundColor: '#1b2724', 
+            backgroundColor: Colors.surface.primary, 
             borderTopWidth: 1,
-            borderTopColor: '#283935', 
+            borderTopColor: Colors.border.primary, 
             borderRadius: 2,
             elevation: 0,
             height: 70,
@@ -46,7 +47,7 @@ export default function TabLayout() {
         }),
         tabBarLabelStyle: {
           fontSize: 11,
-          fontWeight: '500',
+          fontFamily: getFontFamily('spaceGrotesk', 'medium'),
           marginTop: 4,
           marginBottom: -5,
         },
@@ -55,10 +56,10 @@ export default function TabLayout() {
         },
       }}>
         <Tabs.Screen
-          name="calendar"
+          name="index"
           options={{
-            title: 'Calendar',
-            tabBarIcon: ({ color }) => <IconSymbol size={22} name="calendar" color={color} />,
+            title: 'Home',
+            tabBarIcon: ({ color }) => <IconSymbol size={24} name="house.fill" color={color} />,
           }}
         />
       <Tabs.Screen
@@ -69,16 +70,16 @@ export default function TabLayout() {
         }}
       />
         <Tabs.Screen
-          name="index"
+          name="library"
           options={{
-            title: 'Home',
-            tabBarIcon: ({ color }) => <IconSymbol size={24} name="house.fill" color={color} />,
+            title: 'Library',
+            tabBarIcon: ({ color }) => <IconSymbol size={22} name="book.fill" color={color} />,
           }}
         />
       <Tabs.Screen
         name="meals"
         options={{
-          title: 'Meals',
+          title: 'Nutrition',
           tabBarIcon: ({ color }) => <IconSymbol size={22} name="meals" color={color} />,
         }}
       />
@@ -89,6 +90,13 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={22} name="sleep" color={color} />,
         }}
       />
+        <Tabs.Screen
+          name="calendar"
+          options={{
+            title: 'Calendar',
+            tabBarIcon: ({ color }) => <IconSymbol size={22} name="calendar" color={color} />,
+          }}
+        />
     </Tabs>
   );
 }
