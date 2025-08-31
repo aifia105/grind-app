@@ -9,10 +9,19 @@ import { SymbolWeight } from 'expo-symbols';
 import { ComponentProps } from 'react';
 import { OpaqueColorValue, type StyleProp, type TextStyle } from 'react-native';
 
-
-type IconConfig = { 
-  library: 'MaterialIcons' | 'FontAwesome5' | 'FontAwesome' | 'FontAwesome6' | 'Entypo';
-  name: ComponentProps<typeof MaterialIcons>['name'] | ComponentProps<typeof FontAwesome5>['name'] | ComponentProps<typeof FontAwesome>['name'] | ComponentProps<typeof FontAwesome6>['name'] | ComponentProps<typeof Entypo>['name'];
+type IconConfig = {
+  library:
+    | 'MaterialIcons'
+    | 'FontAwesome5'
+    | 'FontAwesome'
+    | 'FontAwesome6'
+    | 'Entypo';
+  name:
+    | ComponentProps<typeof MaterialIcons>['name']
+    | ComponentProps<typeof FontAwesome5>['name']
+    | ComponentProps<typeof FontAwesome>['name']
+    | ComponentProps<typeof FontAwesome6>['name']
+    | ComponentProps<typeof Entypo>['name'];
 };
 
 type IconMapping = {
@@ -21,16 +30,17 @@ type IconMapping = {
   'chevron.left.forwardslash.chevron.right': IconConfig;
   'chevron.right': IconConfig;
   'dumbbell.fill': IconConfig;
-  'calendar': IconConfig;
-  'meals': IconConfig;
-  'sleep': IconConfig;
-  'gear': IconConfig;
-  'menu': IconConfig;
-  'plus': IconConfig;
+  calendar: IconConfig;
+  meals: IconConfig;
+  sleep: IconConfig;
+  gear: IconConfig;
+  menu: IconConfig;
+  plus: IconConfig;
   'book.fill': IconConfig;
-  'sparkles': IconConfig;
-  'magnifyingglass': IconConfig;
+  sparkles: IconConfig;
+  magnifyingglass: IconConfig;
   'line.3.horizontal.decrease': IconConfig;
+  xmark: IconConfig;
 };
 
 type IconSymbolName = keyof IconMapping;
@@ -43,19 +53,23 @@ type IconSymbolName = keyof IconMapping;
 const MAPPING: IconMapping = {
   'house.fill': { library: 'Entypo', name: 'home' },
   'paperplane.fill': { library: 'MaterialIcons', name: 'send' },
-  'chevron.left.forwardslash.chevron.right': { library: 'MaterialIcons', name: 'code' },
+  'chevron.left.forwardslash.chevron.right': {
+    library: 'MaterialIcons',
+    name: 'code',
+  },
   'chevron.right': { library: 'MaterialIcons', name: 'chevron-right' },
   'dumbbell.fill': { library: 'FontAwesome5', name: 'dumbbell' },
-  'calendar': { library: 'FontAwesome', name: 'calendar' },
-  'meals': { library: 'FontAwesome6', name: 'bowl-food' },
-  'sleep': { library: 'MaterialIcons', name: 'nightlight' },
-  'gear': { library: 'MaterialIcons', name: 'settings' },
-  'menu': { library: 'Entypo', name: 'menu' },
-  'plus': { library: 'Entypo', name: 'plus' },
+  calendar: { library: 'FontAwesome', name: 'calendar' },
+  meals: { library: 'FontAwesome6', name: 'bowl-food' },
+  sleep: { library: 'MaterialIcons', name: 'nightlight' },
+  gear: { library: 'MaterialIcons', name: 'settings' },
+  menu: { library: 'Entypo', name: 'menu' },
+  plus: { library: 'Entypo', name: 'plus' },
   'book.fill': { library: 'FontAwesome', name: 'book' },
-  'sparkles': { library: 'FontAwesome5', name: 'magic' },
-  'magnifyingglass': { library: 'FontAwesome', name: 'search' },
+  sparkles: { library: 'FontAwesome5', name: 'magic' },
+  magnifyingglass: { library: 'FontAwesome', name: 'search' },
   'line.3.horizontal.decrease': { library: 'MaterialIcons', name: 'tune' },
+  xmark: { library: 'MaterialIcons', name: 'close' },
 };
 
 /**
@@ -76,27 +90,64 @@ export function IconSymbol({
   weight?: SymbolWeight;
 }) {
   const iconConfig = MAPPING[name];
-  
+
   if (!iconConfig) {
     console.warn(`Icon "${name}" not found in MAPPING. Using fallback icon.`);
-    return <MaterialIcons color={color} size={size} name="home" style={style} />;
+    return (
+      <MaterialIcons color={color} size={size} name="home" style={style} />
+    );
   }
 
   if (iconConfig.library === 'Entypo') {
-    return <Entypo color={color} size={size} name={iconConfig.name as ComponentProps<typeof Entypo>['name']} style={style} />;
+    return (
+      <Entypo
+        color={color}
+        size={size}
+        name={iconConfig.name as ComponentProps<typeof Entypo>['name']}
+        style={style}
+      />
+    );
   }
-  
+
   if (iconConfig.library === 'FontAwesome5') {
-    return <FontAwesome5 color={color} size={size} name={iconConfig.name as ComponentProps<typeof FontAwesome5>['name']} style={style} />;
+    return (
+      <FontAwesome5
+        color={color}
+        size={size}
+        name={iconConfig.name as ComponentProps<typeof FontAwesome5>['name']}
+        style={style}
+      />
+    );
   }
 
   if (iconConfig.library === 'FontAwesome6') {
-    return <FontAwesome6 color={color} size={size} name={iconConfig.name as ComponentProps<typeof FontAwesome5>['name']} style={style} />;
+    return (
+      <FontAwesome6
+        color={color}
+        size={size}
+        name={iconConfig.name as ComponentProps<typeof FontAwesome5>['name']}
+        style={style}
+      />
+    );
   }
 
   if (iconConfig.library === 'FontAwesome') {
-    return <FontAwesome color={color} size={size} name={iconConfig.name as ComponentProps<typeof FontAwesome>['name']} style={style} />;
+    return (
+      <FontAwesome
+        color={color}
+        size={size}
+        name={iconConfig.name as ComponentProps<typeof FontAwesome>['name']}
+        style={style}
+      />
+    );
   }
 
-  return <MaterialIcons color={color} size={size} name={iconConfig.name as ComponentProps<typeof MaterialIcons>['name']} style={style} />;
+  return (
+    <MaterialIcons
+      color={color}
+      size={size}
+      name={iconConfig.name as ComponentProps<typeof MaterialIcons>['name']}
+      style={style}
+    />
+  );
 }

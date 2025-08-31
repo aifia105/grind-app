@@ -1,66 +1,89 @@
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { Colors } from '@/constants/Colors';
 import { getFontFamily } from '@/constants/Fonts';
-import React from 'react';
+import { useProgramStore } from '@/stores/programStore';
+import React, { useEffect } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function TodayWorkoutCard() {
-  const type = "upper";
-  const upperSession = {
-    title: "Upper Body",
-    subtitle: "Push Day",
-    duration: "45-60 min",
-    exercises: "6 exercises",
-    nextExercise: "Bench Press",
-    nextDetails: "4 sets × 8-10 reps",
-    image: require('@/assets/images/TrainingTypes/upper.jpg')
-  };
-  
-  const lowerSession = {
-    title: "Lower Body",
-    subtitle: "Leg Day",
-    duration: "50-65 min",
-    exercises: "7 exercises",
-    nextExercise: "Squat",
-    nextDetails: "4 sets × 6-8 reps",
-    image: require('@/assets/images/TrainingTypes/lower.jpg')
-  };
+type WorkoutSession = {
+  title: string;
+  subtitle: string;
+  duration: string;
+  exercises: string;
+  nextExercise: string;
+  nextDetails: string;
+};
 
-  const todaySession = type === "upper" ? upperSession : lowerSession;
+export default function TodayWorkoutCard() {
+  const { selectedProgram } = useProgramStore();
+  const [todaySession, setTodaySession] = React.useState<WorkoutSession | null>(
+    null,
+  );
+  const image = require(`@/assets/images/TrainingTypes/upper.jpg`);
+
+  useEffect(() => {
+    if (selectedProgram) {
+      setTodaySession({
+        title: selectedProgram.split,
+        subtitle: selectedProgram.workoutsSessions
+          ? selectedProgram.workoutsSessions[0].description
+          : 'N/A',
+        duration: selectedProgram.duration,
+        exercises: selectedProgram.workoutsSessions
+          ? `${selectedProgram.workoutsSessions.length} Exercises`
+          : 'N/A',
+        nextExercise: selectedProgram.workoutsSessions
+          ? selectedProgram.workoutsSessions[0].exercises[0].title
+          : 'N/A',
+        nextDetails: selectedProgram.workoutsSessions
+          ? `${selectedProgram.workoutsSessions.length > 1 ? selectedProgram.workoutsSessions[1].exercises[0].setNumber + ' sets' + '×' + selectedProgram.workoutsSessions[1].exercises[0].reps + ' reps' : 'N/A'} and more`
+          : 'N/A',
+      });
+    }
+  }, [selectedProgram, todaySession]);
 
   return (
     <View style={styles.container}>
-      <Image 
-        source={todaySession.image}
-        style={styles.backgroundImage}
-      />
+      <Image source={image} style={styles.backgroundImage} />
       <View style={styles.overlay} />
       <View style={styles.content}>
         <View style={styles.header}>
           <View style={styles.titleContainer}>
             <Text style={styles.label}>Today's Workout</Text>
-            <Text style={styles.title}>{todaySession.title}</Text>
-            <Text style={styles.subtitle}>{todaySession.subtitle}</Text>
+            <Text style={styles.title}>{todaySession?.title ?? 'N/A'}</Text>
+            <Text style={styles.subtitle}>{todaySession?.subtitle}</Text>
           </View>
           <TouchableOpacity style={styles.playButton}>
-            <IconSymbol size={24} name="paperplane.fill" color={Colors.background.primary} />
+            <IconSymbol
+              size={24}
+              name="paperplane.fill"
+              color={Colors.background.primary}
+            />
           </TouchableOpacity>
         </View>
-        
+
         <View style={styles.workoutInfo}>
           <View style={styles.infoItem}>
             <IconSymbol size={16} name="gear" color="#9cbab3" />
-            <Text style={styles.infoText}>{todaySession.duration}</Text>
+            <Text style={styles.infoText}>
+              {todaySession?.duration ?? 'N/A'}
+            </Text>
           </View>
           <View style={styles.infoItem}>
             <IconSymbol size={16} name="dumbbell.fill" color="#9cbab3" />
-            <Text style={styles.infoText}>{todaySession.exercises}</Text>
+            <Text style={styles.infoText}>
+              {todaySession?.exercises ?? 'N/A'}
+            </Text>
           </View>
         </View>
-        
+
         <View style={styles.exercisePreview}>
-          <Text style={styles.exerciseTitle}>Next: {todaySession.nextExercise}</Text>
-          <Text style={styles.exerciseDetails}>{todaySession.nextDetails}</Text>
+          <Text style={styles.exerciseTitle}>
+            Next: {todaySession?.nextExercise ?? 'N/A'}
+          </Text>
+          <Text style={styles.exerciseDetails}>
+            {todaySession?.nextDetails}
+          </Text>
         </View>
       </View>
     </View>
