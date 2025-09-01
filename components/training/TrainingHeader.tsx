@@ -51,9 +51,6 @@ export default function TrainingHeader() {
         <Text style={styles.subtitle}>Build your strength</Text>
       </View>
       <View style={styles.rightSection}>
-        <TouchableOpacity style={styles.iconButton}>
-          <IconSymbol size={24} name="calendar" color={Colors.text.tertiary} />
-        </TouchableOpacity>
         <TouchableOpacity
           style={styles.addButton}
           onPress={() => setModalVisible(true)}
